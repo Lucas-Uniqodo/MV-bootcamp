@@ -1,0 +1,24 @@
+{
+  "name": "mv-bootcamp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "royalFamily.js",
+  "scripts": {
+    "test": "jest",
+    "test:report": "--coverage -test"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lucas-Uniqodo/MV-bootcamp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lucas-Uniqodo/MV-bootcamp/issues"
+  },
+  "homepage": "https://github.com/Lucas-Uniqodo/MV-bootcamp#readme",
+  "dependencies": {
+    "jest": "^27.0.6"
+  }
+}
