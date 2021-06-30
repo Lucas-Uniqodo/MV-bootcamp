@@ -1,15 +1,9 @@
-class Passenger {
-    constructor(name, bags = []) {
-        this.name = name
-        this.bags = bags
-    }
-    addBag(bag) {
-            this.bags.push(bag)
-    }
-    static getBags() {
-        return this.bags
-    }
+const Person = require('./Person')
 
+class Passenger extends Person{
+    constructor(name, bags = []) {
+        super(name, bags)
+        }
 }
 
 module.exports = Passenger

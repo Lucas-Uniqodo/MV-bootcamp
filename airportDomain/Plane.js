@@ -1,3 +1,5 @@
+const Passenger = require("./Passenger")
+
 class Plane {
     static planes = []
     constructor(id, origin, destination) {
@@ -5,6 +7,7 @@ class Plane {
         this.depart(origin, destination)
         this.passengers = []
         this.constructor.planes.push(this)
+        this.crew = []
     }
     getOrigin() {
         return this.origin
@@ -12,17 +15,21 @@ class Plane {
     getDestination() {
         return this.destination
     }
-    boardPassenger(passenger) {
-        this.passengers.push(passenger)
+    board(person) {
+        if (person instanceof Passenger) {
+            this.passengers.push(person)
+        } else {
+            this.crew.push(person)
+        }
     }
     getBoardedPassengers() {
         return this.passengers
     }
     depart(airportorigin, airportdestination) {
-        airportorigin.planes.pop(this)
+        airportorigin.planes.splice(airportorigin.planes.indexOf(this), 1)
         airportdestination.planes.push(this)
-        this.origin = airportorigin.name
-        this.destination = airportdestination.name
+        this.origin = airportorigin
+        this.destination = airportdestination
     }
 }
 module.exports = Plane
