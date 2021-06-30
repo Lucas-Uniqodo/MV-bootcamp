@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "Airport.js",
   "scripts": {
-    "test": "jest",
-    "test:report": "--coverage -test"
+    "test": "jest --watchAll",
+    "test:report": "jest --coverage=true"
   },
   "author": "",
   "license": "ISC",

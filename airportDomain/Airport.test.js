@@ -5,8 +5,8 @@ const Bag = require('./Bag')
 const Crew = require('./Crew')
 const Person = require('./Person')
 
-const Gatwick = new Airport("Gatwick")
-const Heathrow = new Airport("Heathrow")
+const Gatwick = new Airport()
+const Heathrow = new Airport()
 
 Plane1 = new Plane("1234", Gatwick, Heathrow)
 Plane2 = new Plane("5678", Heathrow, Gatwick)
@@ -67,5 +67,15 @@ describe('passenger objects', () => {
         expect(Heathrow.planes[0].crew[0]).toBe(Mandy)
     })
 
-})
 
+
+    test('getters', () => {
+        expect(Heathrow.getPlanes()).toBe(Heathrow.planes)
+        expect(Airport.getAirports()).toBe(this.constructor.airports)
+        expect(Bag.getWeight()).toBe(Bag.weight)
+        expect(Lucas.getBags()).toBe(Lucas.bags)
+        expect(Plane1.getDestination()).toBe(Plane1.destination)
+        expect(Plane1.getOrigin()).toBe(Plane1.origin)
+        expect(Plane1.getBoardedPassengers()).toBe(Plane1.passengers)
+    })
+})
