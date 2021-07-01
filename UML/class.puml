@@ -1,0 +1,52 @@
+@startuml
+title Airports - Class Diagram
+class Bag {
+    Int weight
+    Int getWeight()
+}
+class Passenger {
+    String seatNo
+    String getSeatNo()
+}
+
+class Crew {
+    String position
+    String getposition()
+}
+
+class Person {
+    String name
+    Array bags
+
+    addBag(bag)
+    getBags()
+}
+
+class Plane {
+    Array planes
+    Int id
+    Array passengers
+    Array crew
+
+    Object getOrigin()
+    Object getDestination() 
+    board(person)
+    Array getBoardedPassengers()
+    depart(airportorigin, airportdestination)
+}
+class Airport {
+    Array airports
+    Array planes
+    Array getAirports()
+    Array getPlanes()
+}
+
+
+Airport "1" o-- "many" Plane
+Person <|-- Passenger
+Person <|-- Crew
+Plane "1" o-- "many" Passenger
+Plane "1" o-- "many" Crew
+Person "1" o-- "many" Bag
+
+@enduml

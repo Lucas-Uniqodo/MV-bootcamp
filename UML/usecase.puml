@@ -1,0 +1,28 @@
+@startuml airport
+
+left to right direction
+
+actor Passenger
+actor Pilot
+actor CabinCrew
+actor Security
+actor BaggageHandler
+actor Mechanic
+
+rectangle System {
+    usecase BoardAircraft
+    usecase GoThroughSecurity
+    usecase FixPlanes
+    usecase CheckSuspiciousCharactersOut
+    usecase handleBaggage
+    usecase flyPlane
+    Pilot --> flyPlane
+    Passenger --> BoardAircraft
+    CabinCrew --> BoardAircraft
+    Passenger --> GoThroughSecurity
+    Mechanic --> FixPlanes
+    Security --> CheckSuspiciousCharactersOut
+    BaggageHandler --> handleBaggage
+}
+
+@enduml

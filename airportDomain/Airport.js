@@ -1,7 +1,6 @@
 class Airport {
     static airports = []
-    constructor(name) {
-        this.name = name
+    constructor() {
         this.planes = []
         this.constructor.airports.push(this)
     }

@@ -79,3 +79,4 @@ describe('passenger objects', () => {
         expect(Plane1.getBoardedPassengers()).toBe(Plane1.passengers)
     })
 })
+

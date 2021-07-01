@@ -1,0 +1,79 @@
+' To hire a scooter, a user must download the Electric Scooter Hire app and register their details
+' Only users 18 years and above can ride a scooter
+' Scooters are rented from charging stations
+' There are multiple charging stations in the city
+' Only fully charged scooters can be rented
+' A scooter must be returned to a charging station
+' It takes 2 hours to fully charge a scooter from empty
+' Payment is taken once the user has returned their scooter
+' A scooter can be marked by a user as broken. This must remove the scooter from a list of available scooters and trigger maintenance personnel to repair the scooter
+' The maximum range of a fully charged scooter is 32 km
+
+' A UML Class diagram showing the system's classes, their attributes, methods and inter-relationships
+
+@startuml
+title Scooter - Class Diagram
+
+class ChargingStation {
+    Int location
+    charge(scooterId)
+}
+
+class Scooter {
+    Int scooterId
+    Int charge
+    Int condition
+    Int location
+    Int currentUserId
+
+    Int getId()
+    Int getCharge()
+    Int getcondition()
+    Int getLocation()
+
+}
+
+class Person {
+    String name
+}
+
+class MaintenancePersonnel {
+    Int employeeId
+    fixScooter(scooterId)
+}
+
+class User {
+    Int userId
+    Int age
+    String creditCardDetails
+    Int currentScooterId
+
+    inputAge()
+    inputCreditCardDetails()
+    requestScooter(scooterId)
+    returnScooter()
+    flagAsBroken()
+}
+
+class Hire {
+    Int userId
+    Int scooterId
+    Int startPoint
+    Int endPoint
+    Int distanceTravelled
+
+    Int getStartPoint()
+    Int getendPoint()
+    Int lockScooter()
+    Int unlockScooter()
+    Int calculateDistanceTravelled()
+}
+
+
+User --> Person
+MaintenancePersonnel --> Person
+User "1" --- "*" Hire
+Hire "*" --- "1" Scooter
+Scooter "1" --- "*" ChargingStation
+
+@enduml
