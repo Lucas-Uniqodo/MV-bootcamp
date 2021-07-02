@@ -1,0 +1,30 @@
+@startuml
+title Request Scooter
+actor User
+
+box "Scooter App front-end" #LightBlue
+participant ScooterHireApp
+end box
+
+box "Scooter App back-end" #LightPink
+participant ScooterHireBackendAPI
+participant HireTransaction
+database ScooterHireDatabase
+end box
+
+actor Scooter
+actor ChargingStation
+
+User -> ScooterHireApp: requestScooter()
+User -> Scooter: scanQRCode()
+ScooterHireApp -> ScooterHireBackendAPI: startHire()
+ScooterHireBackendAPI -> ScooterHireApp: getCondition()
+ScooterHireBackendAPI -> ScooterHireApp: getCurrentCharge()
+ScooterHireBackendAPI -> ScooterHireApp: getCurrentUserId()
+ScooterHireBackendAPI -> HireTransaction: create(userId, scooterId, currentLocation)
+ScooterHireBackendAPI -> ScooterHireDatabase: save hire transaction id
+ScooterHireApp -> ChargingStation: unlockScooter(scooterId)
+ChargingStation -> ChargingStation: releaseScooter(scooterId)
+@enduml
+
+

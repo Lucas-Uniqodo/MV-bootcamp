@@ -1,4 +1,4 @@
-' To hire a scooter, a user must download the Electric Scooter Hire app and register their details
+' To HireTransaction a scooter, a user must download the Electric Scooter HireTransaction app and register their details
 ' Only users 18 years and above can ride a scooter
 ' Scooters are rented from charging stations
 ' There are multiple charging stations in the city
@@ -17,19 +17,23 @@ title Scooter - Class Diagram
 class ChargingStation {
     Int location
     charge(scooterId)
+    Int lockScooter(scooterId)
+    Int unlockScooter(scooterId)
 }
 
 class Scooter {
     Int scooterId
-    Int charge
-    Int condition
+    Int currentCharge
+    Bool inWorkingCondition
+    Bool locked
     Int location
     Int currentUserId
 
-    Int getId()
-    Int getCharge()
-    Int getcondition()
+    Int getScooterId()
+    Int getcurrentCharge()
+    Int getCondition()
     Int getLocation()
+    Int getCurrentUserId()
 
 }
 
@@ -43,37 +47,51 @@ class MaintenancePersonnel {
 }
 
 class User {
+    Array transactions
     Int userId
     Int age
     String creditCardDetails
     Int currentScooterId
+    Bool userDataValid
+    }
 
-    inputAge()
-    inputCreditCardDetails()
+class RegisteredUser {
     requestScooter(scooterId)
     returnScooter()
     flagAsBroken()
+
 }
 
-class Hire {
-    Int userId
-    Int scooterId
+class ScooterHireTransactionApp {
+    inputAge(userId)
+    inputCreditCardDetails(userId)
+}
+
+class HireTransaction {
     Int startPoint
     Int endPoint
     Int distanceTravelled
+    Int paymentIncurred
+    Bool payedFor
 
     Int getStartPoint()
     Int getendPoint()
-    Int lockScooter()
-    Int unlockScooter()
-    Int calculateDistanceTravelled()
+    Int calculatePayment()
 }
 
+class ScooterHireBackendAPI {}
 
-User --> Person
-MaintenancePersonnel --> Person
-User "1" --- "*" Hire
-Hire "*" --- "1" Scooter
-Scooter "1" --- "*" ChargingStation
+class ScooterHireDatabase {
+    Array users
+}
+
+Person <|-- User
+Person <|-- MaintenancePersonnel
+User <|-- RegisteredUser
+
+RegisteredUser "1" --- "*" HireTransaction: makes
+User "*" --- "1" ScooterHireTransactionApp: uses
+HireTransaction "*" --- "1" Scooter: references
+ChargingStation "*" --- "1" Scooter: charges
 
 @enduml

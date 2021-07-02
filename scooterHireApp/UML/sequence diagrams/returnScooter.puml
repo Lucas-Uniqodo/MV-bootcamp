@@ -1,0 +1,29 @@
+@startuml
+title Return Scooter
+actor User
+
+box "Scooter App front-end" #LightBlue
+participant ScooterHireApp
+end box
+
+box "Scooter App back-end" #LightPink
+participant ScooterHireBackendAPI
+participant HireTransaction
+database ScooterHireDatabase
+end box
+
+actor Scooter
+actor ChargingStation
+
+
+User -> ScooterHireApp: returnScooter(currentScooter)
+ScooterHireApp -> ScooterHireBackendAPI: endHire()
+ScooterHireBackendAPI -> Scooter: check location is valid
+ScooterHireBackendAPI -> HireTransaction: setEndPoint(currentLocation)
+ScooterHireBackendAPI -> ScooterHireBackendAPI: calculate payment
+ScooterHireBackendAPI -> ScooterHireDatabase: update hire transaction
+ScooterHireBackendAPI -> ChargingStation: lockScooter(scooterId)
+ChargingStation -> ChargingStation: relockScooter(scooterId)
+ScooterHireApp -> User: requestPayment()
+User -> ScooterHireApp: pay()
+@enduml
