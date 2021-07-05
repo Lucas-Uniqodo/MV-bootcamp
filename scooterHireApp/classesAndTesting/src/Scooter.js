@@ -1,3 +1,5 @@
+const ScooterHireDatabase = require("./ScooterHireDatabase")
+
 class Scooter {
     static idCounter = 1
     constructor(location) {
@@ -6,7 +8,8 @@ class Scooter {
         this.inWorkingCondition = true
         this.locked = true
         this.location = location
-        this.currentUserId = undefined
+        this.currentUser = undefined
+        ScooterHireDatabase.scooters.push(this)
     }
 
     reportBroken() {
@@ -33,8 +36,12 @@ class Scooter {
         return this.location
     }
     
-    getCurrentUserId() {
-        return this.currentUserId
+    getCurrentUser() {
+        return this.currentUser
+    }
+
+    move(newLocation) {
+        this.location = newLocation
     }
 }
 

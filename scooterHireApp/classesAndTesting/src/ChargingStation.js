@@ -1,23 +1,25 @@
+const ScooterHireDatabase = require("./ScooterHireDatabase")
+
 class ChargingStation {
 
     constructor(location) {
         this.location = location
+        ScooterHireDatabase.chargingStationLocations.push(this.location)
     }
 
-    charge(MyScooter) {
-        if (MyScooter.inWorkingCondition == true) {
-            MyScooter.charge = 100
+    charge(scooter) {
+        if (scooter.inWorkingCondition == true) {
+            scooter.charge = 100
         }
-        console.log(MyScooter.inWorkingCondition, "qwertyuiop")
-        return MyScooter.inWorkingCondition
+        return scooter.inWorkingCondition
     }
 
-    lock(MyScooter) {
-        MyScooter.locked = true
+    lock(scooter) {
+        scooter.locked = true
     }
 
-    unlock(MyScooter) {
-        MyScooter.locked = false
+    unlock(scooter) {
+        scooter.locked = false
     }
 }
 

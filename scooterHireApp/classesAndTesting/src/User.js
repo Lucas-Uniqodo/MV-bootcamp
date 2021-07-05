@@ -1,4 +1,5 @@
 const ScooterHireDatabase = require('./ScooterHireDatabase')
+const HireTransaction = require("./HireTransaction")
 const Person = require('./Person')
 
 class User extends Person {
@@ -11,6 +12,7 @@ class User extends Person {
         this.currentScooter = undefined
         this.currentHire = undefined
         this.validUser = false
+        ScooterHireDatabase.users.push(this)
     }
 
     inputAgeAndCreditCardDetails(age, creditCardDetails) {
@@ -22,21 +24,34 @@ class User extends Person {
     }
 
     requestScooter(scooter) {
-        if (this.currentScooter == undefined && scooter.currentUser == undefined) {
-            new HireTransaction(scooter.location)
+        console.log(this.currentScooter == undefined, scooter.currentUser == undefined, this.validUser)
+        if ((this.currentScooter == undefined) && (scooter.currentUser == undefined) && (this.validUser)) {
+            this.currentHire = new HireTransaction(scooter.location)
+            scooter.currentUser = this
             this.currentScooter = scooter
-            scooter.currentUser == this
-        } 
+        } else {
+            console.log("you are already using a scooter")
+        }
     }
 
     returnScooter() {
-        ScooterHireDatabase.hireTransactions[this.currentHire].endPoint = this.currentScooter.location
-        this.currentScooter = scooter
-        scooter
-        
+        if ((this.currentScooter != undefined) && (this.currentScooter.currentUser != undefined) && (this.validUser) && (ScooterHireDatabase.chargingStationLocations.includes(this.currentScooter.location))) {
+            this.currentHire.endPoint = this.currentScooter.location
+            console.log(this.currentHire.endPoint, this.currentScooter.location)
+            let payment = this.currentHire.calculatePaymentIncurred()
+            //this.pay(payment), no current way of paying for obvious reasons
+            this.currentHire.payedFor = true
+            this.currentScooter.currentUser = undefined
+            this.currentScooter = undefined
+
+        } else {
+            console.log("you aren't using a scooter")
+        }
     }
 
-    flagAsBroken() {}
+    flagAsBroken() {
+        this.currentScooter.reportBroken()
+    }
 
 }
 module.exports = User
