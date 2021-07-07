@@ -2,6 +2,7 @@ const ScooterHireDatabase = require("./ScooterHireDatabase")
 
 class Scooter {
     static idCounter = 1
+    static maxRange = 32 //km
     constructor(location) {
         this.scooterId = this.constructor.idCounter
         this.currentCharge = 100
@@ -10,6 +11,7 @@ class Scooter {
         this.location = location
         this.currentUser = undefined
         ScooterHireDatabase.scooters.push(this)
+        this.constructor.idCounter++
     }
 
     reportBroken() {
@@ -24,7 +26,11 @@ class Scooter {
         return this.currentCharge
     }
 
-    getCondition() {
+    setCharge(newCharge) {
+        this.currentCharge = newCharge
+    }
+
+    isInWorkingCondition() {
         return this.inWorkingCondition
     }
 

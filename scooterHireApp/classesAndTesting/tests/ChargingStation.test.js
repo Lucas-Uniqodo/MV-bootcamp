@@ -5,27 +5,31 @@ const MaintenancePersonnel = require("../src/MaintenancePersonnel")
 
 
 describe('', () => {
-    MyChargingStation = new ChargingStation("location")
-    MyScooter = new Scooter("location")
-    MyMaintenancePerson = new MaintenancePersonnel("Lucas", "1234")
+    const myChargingStation = new ChargingStation("location")
+    const myScooter = new Scooter("location")
+    const myMaintenancePerson = new MaintenancePersonnel("Lucas", "1234")
 
-    test('MyScooter is in working condition', () => {
-        expect(MyChargingStation.charge(MyScooter)).toBeTruthy()
+    test('myScooter is in working condition', () => {
+        expect(myChargingStation.charge(myScooter)).toBeTruthy()
     })
     
-    test('MyScooter is broken', () => {
-        MyScooter.reportBroken()
-        expect(MyChargingStation.charge(MyScooter)).toBeFalsy()
+    test('myScooter is broken', () => {
+        myScooter.reportBroken()
+        expect(myChargingStation.charge(myScooter)).toBeFalsy()
+        
+        myMaintenancePerson.fixScooter(myScooter)
+        expect(myChargingStation.charge(myScooter)).toBeTruthy()
+
     })
 
     test('locking', () => {
-        MyChargingStation.lock(MyScooter)
-        expect(MyScooter.locked).toBe(true)
+        myChargingStation.lock(myScooter)
+        expect(myScooter.locked).toBe(true)
     })
 
     test('unlocking', () => {
-        MyChargingStation.unlock(MyScooter)
-        expect(MyScooter.locked).toBe(false)
+        myChargingStation.unlock(myScooter)
+        expect(myScooter.locked).toBe(false)
     })
 
 })

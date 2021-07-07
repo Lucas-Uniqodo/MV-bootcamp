@@ -8,10 +8,10 @@ class ChargingStation {
     }
 
     charge(scooter) {
-        if (scooter.inWorkingCondition == true) {
-            scooter.charge = 100
+        if (scooter.isInWorkingCondition()) {
+            scooter.setCharge(100)
         }
-        return scooter.inWorkingCondition
+        return scooter.isInWorkingCondition() //will return true or false depending on the scooter's current condition
     }
 
     lock(scooter) {

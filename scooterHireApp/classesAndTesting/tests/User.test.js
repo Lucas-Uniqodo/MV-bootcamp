@@ -6,36 +6,57 @@ const ChargingStation = require("../src/ChargingStation")
 
 
 describe('', () => {
-    MyUser = new User("Lucas", "1234")
-    MyScooter = new Scooter("location")
-    MyHireTransaction = new HireTransaction("location")
-    MyChargingStation = new ChargingStation("anotherLocation")
+    const myUser = new User("Lucas", "1234")
+    const myScooter = new Scooter("location")
+    const myChargingStation = new ChargingStation("anotherLocation")
     
     test('Users details are validated correctly', () => {
-        MyUser.inputAgeAndCreditCardDetails(19, true)
-        expect(MyUser.validUser).toBeTruthy()
+        myUser.inputAgeAndCreditCardDetails(19, true)
+        expect(myUser.validUser).toBeTruthy()
+    })
+
+    test('Users details are validated correctly', () => {
+        expect(() => myUser.inputAgeAndCreditCardDetails(17, false)).toThrow("invalid details")
     })
 
     test('request Scooter', () => {
-        MyUser.requestScooter(MyScooter)
-        expect(MyUser.currentHire instanceof HireTransaction).toBeTruthy()
-        expect(MyUser.currentScooter).toBe(MyScooter)
-        expect(MyScooter.currentUser).toBe(MyUser)
+        myUser.requestScooter(myScooter)
+
+        expect(myUser.currentHire instanceof HireTransaction).toBeTruthy()
+        expect(myUser.currentScooter).toBe(myScooter)
+        expect(myScooter.currentUser).toBe(myUser)
+    })
+
+    test('request Scooter invalid', () => {
+
+        expect(() => myUser.requestScooter(myScooter)).toThrow("you are already using a scooter");
     })
     
     test('flag As Broken', () => {
-        MyUser.flagAsBroken()
-        expect(MyScooter.inWorkingCondition).toBeFalsy()
+        myUser.flagAsBroken()
+        expect(myScooter.inWorkingCondition).toBeFalsy()
+    })
+
+
+    test('return Scooter with and invalid drop-off location', () => {
+
+        myScooter.move("invalidLocation")
+        expect(() => myUser.returnScooter()).toThrow("invalid drop-off location")
     })
 
     test('return Scooter', () => {
-        MyScooter.move("anotherLocation")
-        MyUser.returnScooter()
-        expect(MyUser.currentScooter).toBe(undefined)
-        expect(MyScooter.currentUser).toBe(undefined)
-        expect(MyUser.currentHire.endPoint).toBe("anotherLocation")
-        expect(MyUser.currentHire.payedFor).toBeTruthy()
+
+        myScooter.move("anotherLocation")
+        myUser.returnScooter()
+
+        expect(myUser.currentScooter).toBe(undefined)
+        expect(myScooter.currentUser).toBe(undefined)
+        expect(myUser.currentHire.endPoint).toBe("anotherLocation")
+        expect(myUser.currentHire.payedFor).toBeTruthy()
     })
 
+    test("return Scooter when you aren't currently hiring one", () => {
+        expect(() => myUser.returnScooter()).toThrow("you aren't using a scooter")
+    })
 
 })
