@@ -13,8 +13,8 @@ function insert() {
             try {
                 // for security reasons - very important to use a 
                 // prepared statement here
-                stmt = db.prepare(`INSERT INTO Restaurants (name, location) VALUES (?, ?)`);
-                stmt.run("Pizza Express", "UK");
+                stmt = db.prepare(`INSERT INTO Restaurants (name, imagelink) VALUES (?, ?)`);
+                stmt.run("Pizza Express", "http...");
             } finally {
                 // IMPORTANT! Close the statement
                 stmt.finalize();
@@ -23,7 +23,7 @@ function insert() {
 
             // insert a row into the Menus table
             try {
-                stmt = db.prepare(`INSERT INTO Menus (name, forKids, vegetarian, vegan, RestaurantsId) VALUES (?, ?, ?, ?, ?)`);
+                stmt = db.prepare(`INSERT INTO Menus (name, forKids, vegetarian, vegan, RestaurantId) VALUES (?, ?, ?, ?, ?)`);
                 stmt.run("vegan menu", 0, 1, 1, 1);
                 stmt.run("main menu", 0, 0, 0, 1);
             } finally {

@@ -13,8 +13,8 @@ function initialise() {
             db.run("DROP TABLE IF EXISTS Menus"); 
             db.run("DROP TABLE IF EXISTS MenuItems"); 
             // create new, empty tables with specific columns and column types
-            db.run("CREATE TABLE Restaurants (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, location TEXT)");
-            db.run("CREATE TABLE Menus (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, forKids BIT, vegetarian BIT, vegan BIT, RestaurantsId INT, FOREIGN KEY (RestaurantsId) REFERENCES RESTAURANTS(id))");
+            db.run("CREATE TABLE Restaurants (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, imagelink TEXT)");
+            db.run("CREATE TABLE Menus (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, forKids BIT, vegetarian BIT, vegan BIT, RestaurantId INT, FOREIGN KEY (RestaurantId) REFERENCES RESTAURANTS(id))");
             db.run("CREATE TABLE MenuItems (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, price FLOAT, menuId INT, FOREIGN KEY (menuId) REFERENCES Menus(id))");
             // TODO - do the same for the other tables
         });
