@@ -2,14 +2,18 @@
   "name": "sqlstuff",
   "version": "1.0.0",
   "description": "",
-  "main": "connectDB.js",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "jest": "^27.0.6"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "jest",
     "test:report": "jest --coverage=true"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "jest": "^27.0.6"
-  }
+  "license": "ISC"
 }

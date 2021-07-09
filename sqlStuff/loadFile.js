@@ -15,6 +15,7 @@ async function loadAndPrint() {
 
         db.serialize(function () {
 
+            let menuId = 0
             //this type of for loop allows for easy reference to both the index, and the element itself
             for (const [restaurantIndex, restaurant] of restaurantsArray.entries()) {
                 let stmt
@@ -27,7 +28,8 @@ async function loadAndPrint() {
                     stmt.finalize();
                 }
 
-                for (const [menuIndex, menu] of restaurant.menus.entries()) {
+                restaurant.menus.forEach(menu => {
+                    menuId++
 
                     try {
                         stmt = db.prepare('INSERT INTO Menus (title, restaurantId) VALUES (?, ?)')
@@ -41,31 +43,31 @@ async function loadAndPrint() {
 
                         try {
                             stmt = db.prepare('INSERT INTO MenuItems (name, price, menuId) VALUES (?, ?, ?)')
-                            stmt.run(item.name, item.price, menuIndex+1)
+                            stmt.run(item.name, item.price, menuId)
                             
                         } finally {
                             stmt.finalize();
                         }
                     });
 
-                };
+                });
 
             };
 
             //foreach loops make code more readable, in my opinion. also i think they're cool :)
-            restaurantsArray.forEach(restaurant => {
-                console.log("\n"+restaurant.name)
+            // restaurantsArray.forEach(restaurant => {
+            //     console.log("\n"+restaurant.name)
 
-                restaurant.menus.forEach(menu => {
-                    console.log("\n   ", menu.title);
+            //     restaurant.menus.forEach(menu => {
+            //         console.log("\n   ", menu.title);
 
-                    menu.items.forEach(item => {
-                        console.log("       ", item.name);
-                    });
+            //         menu.items.forEach(item => {
+            //             console.log("       ", item.name);
+            //         });
 
-                });
+            //     });
 
-            })
+            // })
 
         });
     } catch (error) {
@@ -74,4 +76,5 @@ async function loadAndPrint() {
     }
 }
 // main flow
-loadAndPrint();
+
+module.exports = loadAndPrint()
