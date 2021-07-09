@@ -6,12 +6,13 @@ const {MenuItem} = require('../src/MenuItem')
 
 describe('Relationships', () => {
     beforeAll(async () => {
-        await sequelize.sync({ force: true });
+        await sequelize.sync({ force: true }); //force drops all tables each time it's run
     })
     
     test('restaurants have menus', async () => {
-        const restaurant = await Restaurant.create({name: 'Ronalds', image: 'http://some.image.url'})
-        const menu = await Menu.create({title: 'set 1'});
+        const restaurant = await Restaurant.create({name: 'Ronalds123', image: 'http://some.image.url'})
+        console.log(restaurant)
+        const menu = await Menu.create({title: 'set 1', restaurantId: 1});
         const menuItem = await MenuItem.create({name: 'egg', price: 2.00});
 
 

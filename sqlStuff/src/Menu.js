@@ -1,7 +1,4 @@
 const {sequelize, DataTypes, Model} = require('./sequelize_index');
-const {Restaurant} = require('../src/Restaurant');
-const {Menu} = require('../src/Menu');
-const {MenuItem} = require('../src/MenuItem')
 
 
 class Menu extends Model {
@@ -14,9 +11,15 @@ class Menu extends Model {
     //     this.menuItems = []
     //     this.constructor.idCounter++
     // }
-    addMenuItem(menuItem) {
-        this.menuItems.push(menuItem)
-    }
+
+
+    // getMenuItems() {
+    //     return this.menuItems
+    // }
+
+    // addMenuItem(menuItem) {
+    //     this.menuItems.push(menuItem)
+    // }
 
 
 }

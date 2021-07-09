@@ -13,19 +13,26 @@ class Restaurant extends Model {
     //     this.menus = []
     //     this.constructor.idCounter++
     // }
-    addMenu() {
-        
-    }
+
+    // getMenus() {
+    //     return this.menus
+    // }
+
+    // addMenu(menu) {
+    //     this.menus.push(menu)
+    // }
 }
 
+//this creates the restaurant data model
 Restaurant.init({
     name: DataTypes.STRING,
-    image: DataTypes.STRING,
+    imageLink: DataTypes.STRING,
 }, {
     sequelize,
     timestamps: false,
 });
 
+//this establishes the realationships between tables
 Restaurant.hasMany(Menu, {as: 'menus', foreignKey: 'restaurantId'})
 Menu.belongsTo(Restaurant, {foreignKey: 'restaurantId'})
 Menu.hasMany(MenuItem, {as: 'items', foreignKey: 'menuId'});
