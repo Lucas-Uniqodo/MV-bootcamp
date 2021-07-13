@@ -1,9 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
 const fsp = require('fs').promises; // Node.js file system module with promises
 /**
- * This code illustrates how to load JSON data into an array.
- * 
- */
+This code illustrates how to load JSON data into an array.
+*/
 async function loadAndPrint() {
     const db = new sqlite3.Database('./restaurants.sqlite');
     // wait for the json file to be read
@@ -49,9 +48,7 @@ async function loadAndPrint() {
                             stmt.finalize();
                         }
                     });
-
                 });
-
             };
 
             //foreach loops make code more readable, in my opinion. also i think they're cool :)

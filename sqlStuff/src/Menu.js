@@ -13,13 +13,6 @@ class Menu extends Model {
     // }
 
 
-    // getMenuItems() {
-    //     return this.menuItems
-    // }
-
-    // addMenuItem(menuItem) {
-    //     this.menuItems.push(menuItem)
-    // }
 
 
 }
@@ -35,3 +28,6 @@ Menu.init({
 module.exports = {
     Menu
 };
+
+
+let array = [1,2,3,4,5,6,7,8,9,10]
