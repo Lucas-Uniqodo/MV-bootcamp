@@ -1,15 +1,19 @@
-// Use the instructions above to create a web server running on port 3000, serving static content from a public directory within your project
+// Setup Handlebars on your server
 
-// Validate that you see the files being loaded in the Network section of your browser's Developer Tools. Look at the HTTP status codes, what happens to them when you refresh?
+// Create a route and template that returns all the restaurants
 
-// Now try creating additional HTML pages and link them using anchor tags e.g.
+// Create a route and template that returns a single restaurant (don't worry about showing its menus yet)
 
-// <a href="/about.html">About me</a>
-// Commit your code into Github and share the link with your coach for review
+// Implement your designs from our previous session as closely as you can
 
-// const sequelize = require('sequelize');
-// const connection = require('./sequelize-connection');
+// Submit an image of your original design and what you built with Handlebars in a side by side comparison in the slack channel
+
 const express = require("express");
+const Handlebars = require("handlebars");
+const expressHandlebars = require("express-handlebars");
+const {
+	allowInsecurePrototypeAccess,
+} = require("@handlebars/allow-prototype-access");
 const connection = require("./sequelize-connect");
 
 const Restaurant = require("./models/Restaurant");
@@ -19,6 +23,13 @@ const MenuItem = require("./models/MenuItem");
 const app = express();
 const port = 3000;
 
+// setup our templating engine
+const handlebars = expressHandlebars({
+	handlebars: allowInsecurePrototypeAccess(Handlebars),
+});
+
+app.engine("handlebars", handlebars);
+app.set("view engine", "handlebars");
 app.use(express.json());
 
 //this establishes the realationships between tables
@@ -46,14 +57,6 @@ app.get("/flipcoin", (request, response) => {
 	response.status(200).send(rand);
 });
 
-// Tidy, indented and commented code (install Prettier to help!)
-
-// Extension activities
-// Take a look at Sequelize validation
-// Use Express Router to tidy up server.js file and make your code more modular
-// Use controllers to make your code more modular still
-// (the last three will need some research - see what you can find out!)
-
 //create Restaurant
 app.post("/restaurants", async (request, response) => {
 	if (request.body.name && request.body.imageLink) {
@@ -76,8 +79,10 @@ app.get("/restaurants", async (request, response) => {
 	if (!restaurants) {
 		return response.status(404).send("NOT FOUND");
 	}
+	console.log("the length is " + restaurants.length);
 
-	response.status(200).send(restaurants);
+	response.render("restaurants", { restaurants });
+	// response.status(200).send(restaurants);
 });
 
 app.get("/restaurants/:id", async (request, response) => {
@@ -91,21 +96,26 @@ app.get("/restaurants/:id", async (request, response) => {
 });
 
 app.get("/restaurants/:id/menus", async (request, response) => {
-	const menus = await Restaurant.findAll({
+	const restaurant = await Restaurant.findAll({
 		where: { id: request.params.id },
 		include: [Menu],
 	});
-	if (!menus) {
+	if (!restaurant) {
 		return response.status(404).send("NOT FOUND");
 	}
-
-	response.status(200).send(menus);
+	response.render("menus", { restaurant });
+	// response.status(200).send(restaurant);
 });
 
 app.get("/restaurants/:id/menus/menuItems", async (request, response) => {
 	const menus = await Restaurant.findAll({
 		where: { id: request.params.id },
-		include: [{ Menu: Menu, include: [MenuItem] }],
+		include: [
+			{
+				model: Menu,
+				include: [MenuItem],
+			},
+		],
 	});
 	if (!menus) {
 		return response.status(404).send("NOT FOUND");
