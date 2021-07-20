@@ -1,12 +1,6 @@
-// Setup Handlebars on your server
-
-// Create a route and template that returns all the restaurants
-
-// Create a route and template that returns a single restaurant (don't worry about showing its menus yet)
-
-// Implement your designs from our previous session as closely as you can
-
-// Submit an image of your original design and what you built with Handlebars in a side by side comparison in the slack channel
+// copy over loadFile.js and restaurants.json from your sqlStuff folder to your web server folder - 
+// edit loadFile.js to use restaurants-seq.sqlite (line 7)
+// run node server.js then ctrl-c and run node loadFile.js - this should populate your database with seed data
 
 const express = require("express");
 const Handlebars = require("handlebars");
@@ -51,6 +45,8 @@ connection
 	});
 
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.get("/flipcoin", (request, response) => {
 	let rand = Math.random() >= 0.5 ? "heads" : "tails";
@@ -59,18 +55,18 @@ app.get("/flipcoin", (request, response) => {
 
 //create Restaurant
 app.post("/restaurants", async (request, response) => {
-	if (request.body.name && request.body.imageLink) {
-		const restaurant = await Restaurant.create({
-			name: request.body.name,
-			imageLink: request.body.imageLink,
-		});
-		response.status(201).json(restaurant);
-	} else {
-		//don't know what status code to use here, 418 as placeholder
-		response
-			.status(418)
-			.json("ERROR, RESTAURANT MUST HAVE NAME AND IMAGELINK");
-	}
+	// if (request.body.name && request.body.imageLink) {
+	const restaurant = await Restaurant.create({
+		name: request.body.name,
+		imageLink: request.body.imageLink,
+	});
+	response.redirect("/restaurants");
+	// } else {
+	// don't know what status code to use here, 418 as placeholder
+	// response
+	// .status(418)
+	// .json("ERROR, RESTAURANT MUST HAVE NAME AND IMAGELINK");
+	// }
 });
 
 //read Restaurant
@@ -82,6 +78,11 @@ app.get("/restaurants", async (request, response) => {
 	console.log("the length is " + restaurants.length);
 
 	response.render("restaurants", { restaurants });
+	// response.status(200).send(restaurants);
+});
+
+app.get("/restaurants/form", async (request, response) => {
+	response.render("form");
 	// response.status(200).send(restaurants);
 });
 
@@ -142,7 +143,7 @@ app.get("/restaurants/:id/delete", async (request, response) => {
 	await Restaurant.destroy({
 		where: { id: request.params.id },
 	});
-	res.redirect("/restaurants");
+	response.redirect("/restaurants");
 	// response.status(200).send(restaurant);
 });
 
