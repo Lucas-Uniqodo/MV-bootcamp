@@ -20,7 +20,7 @@ async function loadAndPrint() {
                 let stmt
                 
                 try {
-                    stmt = db.prepare('INSERT INTO Restaurants (name, imagelink) VALUES (?, ?)')
+                    stmt = db.prepare('INSERT INTO Restaurants (name, imageLink) VALUES (?, ?)')
                     stmt.run(restaurant.name, restaurant.image)
                     
                 } finally {

@@ -1,10 +1,27 @@
 <section>
+	<h1>{{restaurant.name}}</h1>
 	<div class="row justify-content-center align-content-center">
-		<h1>{{restaurant.name}} test123</h1>
+		<div class="card" style="margin: 20px; width: 40%">
+			<img
+				src="{{restaurant.imageLink}}"
+				alt="image of {{restaurant.name}}"
+			/>
+			<div class="card-body">
+				<h5 class="card-title">{{restaurant.name}}</h5>
+			</div>
+		</div>
+	</div>
+
+	<div class="row justify-content-center align-content-center">
 		{{#each restaurant.Menus}}
 			<div class="card col-xl-3 col-lg-4 col-md-5" style="margin: 20px">
 				<div class="card-body">
-					<h5 class="card-title">{{this.title}} test456</h5>
+					<h5 class="card-title">{{this.title}}</h5>
+					<ol class="card-text">
+						{{#each this.MenuItems}}
+							<li>{{this.name}} £{{this.price}}</li>
+						{{/each}}
+					</ol>
 				</div>
 			</div>
 		{{/each}}

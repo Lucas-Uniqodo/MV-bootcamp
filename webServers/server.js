@@ -96,19 +96,7 @@ app.get("/restaurants/:id", async (request, response) => {
 });
 
 app.get("/restaurants/:id/menus", async (request, response) => {
-	const restaurant = await Restaurant.findAll({
-		where: { id: request.params.id },
-		include: [Menu],
-	});
-	if (!restaurant) {
-		return response.status(404).send("NOT FOUND");
-	}
-	response.render("menus", { restaurant });
-	// response.status(200).send(restaurant);
-});
-
-app.get("/restaurants/:id/menus/menuItems", async (request, response) => {
-	const menus = await Restaurant.findAll({
+	const restaurant = await Restaurant.findOne({
 		where: { id: request.params.id },
 		include: [
 			{
@@ -117,11 +105,11 @@ app.get("/restaurants/:id/menus/menuItems", async (request, response) => {
 			},
 		],
 	});
-	if (!menus) {
+	if (!restaurant) {
 		return response.status(404).send("NOT FOUND");
 	}
-
-	response.status(200).send(menus);
+	response.render("menus", { restaurant });
+	// response.status(200).send(restaurant);
 });
 
 //update Restaurant
@@ -144,7 +132,8 @@ app.put("/restaurants/:id", async (request, response) => {
 });
 
 //delete Restaurant
-app.delete("/restaurants/:id", async (request, response) => {
+
+app.get("/restaurants/:id/delete", async (request, response) => {
 	const restaurant = await Restaurant.findByPk(request.params.id);
 	if (!restaurant) {
 		return response.status(404).send("NOT FOUND");
@@ -153,7 +142,8 @@ app.delete("/restaurants/:id", async (request, response) => {
 	await Restaurant.destroy({
 		where: { id: request.params.id },
 	});
-	response.status(200).send(restaurant);
+	res.redirect("/restaurants");
+	// response.status(200).send(restaurant);
 });
 
 //create Menu
