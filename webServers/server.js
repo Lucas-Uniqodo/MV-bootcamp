@@ -1,4 +1,4 @@
-// copy over loadFile.js and restaurants.json from your sqlStuff folder to your web server folder - 
+// copy over loadFile.js and restaurants.json from your sqlStuff folder to your web server folder -
 // edit loadFile.js to use restaurants-seq.sqlite (line 7)
 // run node server.js then ctrl-c and run node loadFile.js - this should populate your database with seed data
 
@@ -83,7 +83,6 @@ app.get("/restaurants", async (request, response) => {
 
 app.get("/restaurants/form", async (request, response) => {
 	response.render("form");
-	// response.status(200).send(restaurants);
 });
 
 app.get("/restaurants/:id", async (request, response) => {
@@ -113,9 +112,15 @@ app.get("/restaurants/:id/menus", async (request, response) => {
 	// response.status(200).send(restaurant);
 });
 
-//update Restaurant
-app.put("/restaurants/:id", async (request, response) => {
+app.get("/restaurants/:id/updateform", async (request, response) => {
 	const restaurant = await Restaurant.findByPk(request.params.id);
+	response.render("updateform", { restaurant });
+});
+
+//update Restaurant
+app.post("/restaurants/:id/update", async (request, response) => {
+	const restaurant = await Restaurant.findByPk(request.params.id);
+	console.log(request.body);
 	if (!restaurant) {
 		return response.status(404).send("NOT FOUND");
 	}
@@ -129,7 +134,7 @@ app.put("/restaurants/:id", async (request, response) => {
 			where: { id: request.params.id },
 		}
 	);
-	response.status(200).send(restaurant);
+	response.redirect("/restaurants");
 });
 
 //delete Restaurant

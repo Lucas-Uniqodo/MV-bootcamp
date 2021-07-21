@@ -2,7 +2,6 @@
 	<div class="row justify-content-center align-content-center">
 		<h1>Restaurants</h1>
 		<a href="/restaurants/form" class="btn btn-primary">Add Restaurant</a>
-		
 
 		{{#each restaurants}}
 			<div class="card col-xl-3 col-lg-4 col-md-5" style="margin: 20px">
@@ -17,6 +16,10 @@
 						href="/restaurants/{{this.id}}/delete"
 						class="btn btn-primary"
 					>Delete Restaurant</a>
+					<a
+						href="/restaurants/{{this.id}}/updateform"
+						class="btn btn-primary"
+					>update Restaurant</a>
 				</div>
 			</div>
 		{{/each}}
