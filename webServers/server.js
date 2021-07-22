@@ -114,6 +114,7 @@ app.get("/restaurants/:id/menus", async (request, response) => {
 
 app.get("/restaurants/:id/updateform", async (request, response) => {
 	const restaurant = await Restaurant.findByPk(request.params.id);
+	console.log(restaurant);
 	response.render("updateform", { restaurant });
 });
 

@@ -19,7 +19,18 @@
 					<h5 class="card-title">{{this.title}}</h5>
 					<ol class="card-text">
 						{{#each this.MenuItems}}
-							<li>{{this.name}} £{{this.price}}</li>
+							<li>
+								<p>
+									{{this.name}}
+									£{{this.price}}
+									<button
+										class="btn btn-primary"
+										onclick="addToOrder('{{this.name}}', '{{this.price}}')"
+										id="MenuItem{{this.id}}"
+										>Add
+									</button>
+								</p>
+							</li>
 						{{/each}}
 					</ol>
 				</div>
@@ -27,3 +38,4 @@
 		{{/each}}
 	</div>
 </section>
+

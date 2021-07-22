@@ -4,6 +4,7 @@
 		<a href="/restaurants/form" class="btn btn-primary">Add Restaurant</a>
 
 		{{#each restaurants}}
+		{{!-- filter by rating, google if statement in handlebars --}}
 			<div class="card col-xl-3 col-lg-4 col-md-5" style="margin: 20px">
 				<img src="{{this.imageLink}}" alt="image of {{this.name}}" />
 				<div class="card-body">

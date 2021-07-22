@@ -11,7 +11,49 @@
 	</head>
 
 	<body>
-		
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/restaurants">Restaurants</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div
+					class="collapse navbar-collapse"
+					id="navbarSupportedContent"
+				>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item dropdown">
+							<a
+								class="nav-link dropdown-toggle"
+								href="#"
+								id="navbarDropdown"
+								role="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
+							>
+								Order
+							</a>
+							<ul
+								class="dropdown-menu row"
+								aria-labelledby="navbarDropdown"
+								id="OrderList"
+							>
+
+
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 		{{{body}}}
 		<!-- My bootstrap JS link -->
 		<script
@@ -21,3 +63,36 @@
 		></script>
 	</body>
 </html>
+
+<script>
+	orderList = []
+
+	function addToOrder(name, price) {
+		orderList.push([name, price])
+        localStorage.setItem("orderList", JSON.stringify(orderList))
+		displayOrder()
+    }
+
+	function displayOrder() {
+		document.getElementById("OrderList").innerHTML = ""
+		orderList.forEach(order => {
+			let listItem = document.createElement("li"); 
+			listItem.innerHTML =`<p
+							class="dropdown-item col"
+							>${order[0]} £${order[1]}</p>`
+			document.getElementById("OrderList").appendChild(listItem)
+		})
+	}
+
+
+
+// retrieving local storage
+		let orderListStorage = localStorage.getItem("orderList")
+
+		//if local storage is found, updates the task managers corresponding attributes and displays local storage's content
+		if(orderListStorage){
+			orderList = JSON.parse(orderListStorage)
+			//displayOrder()
+			displayOrder()
+		} 
+</script>
